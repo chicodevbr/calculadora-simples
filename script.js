@@ -2,6 +2,10 @@ const input = document.querySelector('.display');
 
 const keyboardInputs = document.querySelector('#keyboardInputs');
 
+let operator;
+let num1;
+let num2;
+
 const keyboardButtons = [
   7,
   8,
@@ -35,29 +39,43 @@ const btnClick = (event) => {
   const target = targetEvent(event);
 
   if (target.value >= 0) {
+    input.innerHTML += '';
     input.innerHTML += target.value;
   }
   switch (target.value) {
     case '/':
       input.innerHTML += target.value;
+      operator = target.value;
+
       break;
     case '*':
       input.innerHTML += target.value;
+      operator = target.value;
+
       break;
     case '-':
       input.innerHTML += target.value;
+      operator = target.value;
+
       break;
     case '+':
       input.innerHTML += target.value;
+      operator = target.value;
+
+      break;
+    case '.':
+      input.innerHTML += target.value;
+      operator = target.value;
+
       break;
     case 'AC':
       input.innerHTML = '';
       break;
     case '=':
       let equacao = input.innerHTML;
-      //eval apenas para testar. Falta construir função para calcular os inputs
-      input.innerHTML = eval(equacao);
-      console.log(eval(equacao));
+
+      input.innerHTML = calcula(equacao, operator);
+
     default:
       break;
   }
@@ -68,7 +86,24 @@ const targetEvent = (event) => {
   return target;
 };
 
-const calcula = (equacao) => {};
+const calcula = (equacao, operator) => {
+  let num = equacao.split(operator);
+  num1 = num[0];
+  num2 = num[1];
+  if (operator === '/') {
+    return Number.parseFloat(num1) / Number.parseFloat(num2);
+  } else if (operator === '*') {
+    return Number.parseFloat(num1) * Number.parseFloat(num2);
+  } else if (operator === '-') {
+    return Number.parseFloat(num1) - Number.parseFloat(num2);
+  } else {
+    return Number.parseFloat(num1) - Number.parseFloat(num2);
+  }
+};
+
+const sumFunction = (num1, num2) => {
+  return Number.parseFloat(num1) + Number.parseFloat(num2);
+};
 
 window.onload = () => {
   renderKeyborad(keyboardButtons, keyboardInputs);
